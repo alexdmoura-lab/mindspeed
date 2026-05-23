@@ -130,6 +130,12 @@
     width:6px; height:22px; background: var(--red);
     transform: skewX(-18deg);
   }
+  .brand .logo-img{
+    height: 28px; width: auto; display: block;
+  }
+  @media (min-width: 800px){
+    .brand .logo-img{ height: 32px; }
+  }
   .top-cta{
     display: none;
   }
@@ -328,7 +334,7 @@
     display: flex; gap: 56px;
     padding: 14px 0;
     white-space: nowrap;
-    animation: tickerMove 38s linear infinite;
+    animation: tickerMove 22s linear infinite;
     font-family: var(--display); font-style: italic; font-weight: 800;
     text-transform: uppercase; letter-spacing: 0.06em;
     font-size: 18px;
@@ -795,8 +801,10 @@
 <header class="top" data-screen-label="00 Topbar">
   <div class="wrap top-inner">
     <a href="#top" class="brand" aria-label="MINDSPEED">
-      <span class="bar" aria-hidden="true"></span>
-      MINDSPEED
+      <img class="logo-img" src="assets/logo-mindspeed.png" alt="MINDSPEED — Performance Mental para Pilotos"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='inline-block';this.nextElementSibling.nextElementSibling.style.display='inline';" />
+      <span class="bar" aria-hidden="true" style="display:none;"></span>
+      <span style="display:none;">MINDSPEED</span>
     </a>
     <a href="#agendar" class="btn sm top-cta" aria-label="Agende uma conversa diagnóstica gratuita">
       Agendar diagnóstico
