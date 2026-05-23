@@ -337,21 +337,23 @@
     display: flex; gap: 56px;
     padding: 14px 0;
     white-space: nowrap;
-    animation: tickerMove 18s linear infinite;
+    animation: tickerMove var(--ticker-duration, 18s) linear infinite;
     font-family: var(--display); font-style: italic; font-weight: 800;
     text-transform: uppercase; letter-spacing: 0.06em;
     font-size: 18px;
     color: var(--fg-mute);
     will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
   @media (max-width: 980px){
-    .ticker-track{ animation-duration: 8s; }
+    .ticker-track{ gap: 36px; font-size: 16px; }
   }
   .ticker-track span{ display:inline-flex; align-items:center; gap: 14px; }
   .ticker-track .dot{ width:6px; height:6px; background:var(--red); border-radius:50%; display:inline-block; }
   @keyframes tickerMove{
-    from{ transform: translateX(0); }
-    to{ transform: translateX(-50%); }
+    from{ transform: translate3d(0,0,0); }
+    to{ transform: translate3d(-50%,0,0); }
   }
 
   /* ====== Section ====== */
@@ -1213,6 +1215,27 @@
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
     els.forEach(e => io.observe(e));
+  })();
+
+  // ===== Ticker speed: duração calculada em px/s para velocidade consistente =====
+  (function(){
+    const track = document.querySelector('.ticker-track');
+    if (!track) return;
+    const DESKTOP_PX_PER_SEC = 140;
+    const MOBILE_PX_PER_SEC  = 320;
+
+    function update(){
+      const halfWidth = track.scrollWidth / 2;
+      if (!halfWidth) return;
+      const speed = window.innerWidth < 980 ? MOBILE_PX_PER_SEC : DESKTOP_PX_PER_SEC;
+      const duration = halfWidth / speed;
+      track.style.setProperty('--ticker-duration', duration.toFixed(2) + 's');
+    }
+    update();
+    // recalcula quando fontes carregam, na rotação do device e em resize
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(update);
+    window.addEventListener('resize', update);
+    window.addEventListener('orientationchange', update);
   })();
 
   // ===== Sticky mobile CTA: show after scrolling past hero =====
