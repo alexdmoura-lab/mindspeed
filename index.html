@@ -1,0 +1,1205 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>MINDSPEED — Performance Mental para Pilotos</title>
+<meta name="description" content="Mentoria de performance mental para pilotos de automobilismo e kart. A corrida que ninguém vê começa na sua mente." />
+<meta name="theme-color" content="#0a0a0a" />
+<meta name="color-scheme" content="dark" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="format-detection" content="telephone=no" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:ital,wght@0,700;0,800;0,900;1,700;1,800;1,900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:        #0a0a0a;
+    --bg-2:      #111111;
+    --bg-3:      #161616;
+    --line:      #1f1f1f;
+    --line-2:    #2a2a2a;
+    --fg:        #f5f5f5;
+    --fg-dim:    #b3b3b3;
+    --fg-mute:   #6e6e6e;
+    --red:       #E10600;
+    --red-hot:   #ff1a1a;
+    --red-deep:  #8a0400;
+
+    --display:   "Saira Condensed", "Oswald", "Arial Narrow", system-ui, sans-serif;
+    --body:      "Inter", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    --mono:      "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+    --max:       1240px;
+    --pad:       clamp(20px, 5vw, 56px);
+  }
+
+  *,*::before,*::after{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+  body{
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    overscroll-behavior-y: contain;
+  }
+  img{ max-width:100%; display:block; }
+  a, button{
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  a{ color:inherit; text-decoration:none; }
+  button{ font:inherit; cursor:pointer; }
+  ::selection{ background: var(--red); color:#fff; }
+
+  /* Anchor scroll-margin so sticky header doesn't cover targets */
+  section[id]{ scroll-margin-top: 72px; }
+
+  /* ====== Layout shell ====== */
+  .wrap{
+    width:100%;
+    max-width: var(--max);
+    margin:0 auto;
+    padding: 0 var(--pad);
+  }
+
+  /* ====== Display type ====== */
+  .display{
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    line-height: 0.92;
+    text-transform: uppercase;
+  }
+  .display .red{ color: var(--red); }
+  .eyebrow{
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--fg-mute);
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .eyebrow::before{
+    content:"";
+    width: 28px; height: 1px; background: var(--red);
+    display:inline-block;
+  }
+
+  /* ====== Header (top bar) ====== */
+  header.top{
+    position: sticky; top:0; z-index: 50;
+    background: rgba(10,10,10,0.78);
+    backdrop-filter: blur(12px) saturate(1.1);
+    -webkit-backdrop-filter: blur(12px) saturate(1.1);
+    border-bottom: 1px solid var(--line);
+  }
+  .top-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    height: 64px;
+  }
+  .brand{
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--display); font-weight: 900; font-style: italic;
+    font-size: 22px; letter-spacing: 0.02em; text-transform: uppercase;
+  }
+  .brand .bar{
+    width:6px; height:22px; background: var(--red);
+    transform: skewX(-18deg);
+  }
+  .top-cta{
+    display: none;
+  }
+  @media (min-width: 800px){
+    .top-cta{ display: inline-flex; }
+  }
+
+  /* ====== Buttons ====== */
+  .btn{
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 22px;
+    font-family: var(--display);
+    font-weight: 800; font-style: italic; text-transform: uppercase;
+    letter-spacing: 0.04em; font-size: 16px;
+    border: 1px solid transparent;
+    background: var(--red);
+    color: #fff;
+    transition: transform .15s ease, background .15s ease, box-shadow .2s ease;
+    clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+    position: relative;
+    white-space: nowrap;
+    min-height: 48px; /* iOS/Android hit target */
+  }
+  .btn:hover{ background: var(--red-hot); transform: translateY(-1px); }
+  .btn:active{ transform: translateY(0); }
+  .btn .arrow{
+    display:inline-block;
+    transition: transform .2s ease;
+  }
+  .btn:hover .arrow{ transform: translateX(4px); }
+
+  .btn.ghost{
+    background: transparent;
+    color: var(--fg);
+    border-color: var(--line-2);
+  }
+  .btn.ghost:hover{ border-color: var(--red); color: var(--red); background: transparent; }
+
+  .btn.sm{ padding: 10px 16px; font-size: 13px; }
+  .btn.lg{ padding: 18px 28px; font-size: 19px; }
+
+  /* ====== Diagonal track stripes ====== */
+  .stripes{
+    position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(
+      -68deg,
+      rgba(255,255,255,0.018) 0 2px,
+      transparent 2px 14px
+    );
+    pointer-events: none;
+  }
+  .stripes-red{
+    position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(
+      -68deg,
+      rgba(225,6,0,0.05) 0 2px,
+      transparent 2px 36px
+    );
+    pointer-events: none;
+  }
+
+  /* ====== Hero ====== */
+  .hero{
+    position: relative;
+    padding: clamp(60px, 11vw, 140px) 0 clamp(60px, 9vw, 120px);
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+  }
+  .hero::before{
+    /* faint red glow on the left */
+    content:""; position:absolute; left:-20%; top: 30%;
+    width: 60%; aspect-ratio:1;
+    background: radial-gradient(circle, rgba(225,6,0,0.18), transparent 60%);
+    filter: blur(60px);
+    pointer-events:none;
+  }
+  .hero-grid{
+    position: relative; z-index: 2;
+    display: grid; grid-template-columns: 1fr; gap: 48px;
+    align-items: end;
+  }
+  @media (min-width: 980px){
+    .hero-grid{ grid-template-columns: 1.25fr 1fr; gap: 64px; }
+  }
+  .hero h1{
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 0.86;
+    letter-spacing: -0.015em;
+    font-size: clamp(56px, 12.5vw, 168px);
+    margin: 18px 0 0;
+  }
+  .hero h1 .ninguem{
+    display: inline-block;
+    position: relative;
+    color: var(--red);
+  }
+  .hero h1 .ninguem::after{
+    content:"";
+    position: absolute; left: 0; right: 0; bottom: -4px;
+    height: 4px; background: var(--red);
+    transform: scaleX(0); transform-origin: left;
+    animation: lineGrow 1.1s cubic-bezier(.2,.7,.2,1) .4s forwards;
+  }
+  @keyframes lineGrow{ to{ transform: scaleX(1); } }
+
+  .hero .sub{
+    max-width: 36ch;
+    margin: 28px 0 36px;
+    color: var(--fg-dim);
+    font-size: clamp(17px, 1.6vw, 21px);
+    line-height: 1.45;
+  }
+  .hero .sub b{ color: var(--fg); font-weight: 600; }
+
+  .hero-cta-row{
+    display: flex; flex-wrap: wrap; gap: 14px;
+  }
+
+  .hero-meta{
+    display: flex; gap: 28px; margin-top: 44px;
+    font-family: var(--mono); font-size: 12px;
+    color: var(--fg-mute); letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .hero-meta div b{ color: var(--fg); font-weight: 500; display:block; font-size: 13px; margin-bottom:2px;}
+
+  /* Hero visual placeholder */
+  .hero-visual{
+    position: relative;
+    aspect-ratio: 4/5;
+    background: linear-gradient(180deg, #141414, #0d0d0d);
+    border: 1px solid var(--line-2);
+    overflow: hidden;
+  }
+  .hero-visual .hv-img{
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit: cover;
+    object-position: center;
+    filter: grayscale(0.05) contrast(1.05) brightness(0.92);
+    z-index: 0;
+  }
+  .hero-visual::after{
+    /* dark vignette so text labels stay readable */
+    content:""; position:absolute; inset:0;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.85) 100%),
+      linear-gradient(90deg, rgba(0,0,0,0.35), rgba(0,0,0,0) 40%);
+    pointer-events:none; z-index: 1;
+  }
+  .hero-visual > *:not(.hv-img){ position: relative; z-index: 2; }
+  .hero-visual .diag{
+    position:absolute; inset:0;
+    background-image: repeating-linear-gradient(
+      -68deg,
+      rgba(255,255,255,0.04) 0 1px,
+      transparent 1px 10px
+    );
+  }
+  .hero-visual .corner-red{
+    position:absolute; top:-1px; right:-1px;
+    width: 36%; height: 8px; background: var(--red);
+  }
+  .hero-visual .ph-label{
+    position:absolute; bottom: 16px; left: 16px; right: 16px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: .15em;
+    text-transform: uppercase; color: var(--fg-mute);
+    display:flex; justify-content: space-between;
+  }
+  .hero-visual .ph-center{
+    position: absolute; inset: 0;
+    display:grid; place-items:center;
+    color: var(--fg-mute);
+    font-family: var(--mono); font-size: 12px;
+    letter-spacing: .15em; text-transform: uppercase;
+    text-align: center;
+  }
+  .hero-visual .ph-center span{ display:block; margin-top: 8px; color: #444; font-size: 10px; }
+  .hero-visual .crosshair::before,
+  .hero-visual .crosshair::after{
+    content:""; position:absolute; background: var(--red); opacity:.6;
+  }
+  .hero-visual .crosshair::before{ left:50%; top:36%; width:1px; height: 60px; transform: translateX(-50%); }
+  .hero-visual .crosshair::after{ left:50%; top:50%; width:60px; height:1px; transform: translate(-50%,-50%); }
+
+  /* Telemetry ticker under hero */
+  .ticker{
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    overflow: hidden;
+    background: #050505;
+  }
+  .ticker-track{
+    display: flex; gap: 56px;
+    padding: 14px 0;
+    white-space: nowrap;
+    animation: tickerMove 38s linear infinite;
+    font-family: var(--display); font-style: italic; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    font-size: 18px;
+    color: var(--fg-mute);
+  }
+  .ticker-track span{ display:inline-flex; align-items:center; gap: 14px; }
+  .ticker-track .dot{ width:6px; height:6px; background:var(--red); border-radius:50%; display:inline-block; }
+  @keyframes tickerMove{
+    from{ transform: translateX(0); }
+    to{ transform: translateX(-50%); }
+  }
+
+  /* ====== Section ====== */
+  section{ position: relative; }
+  .section{
+    padding: clamp(72px, 10vw, 140px) 0;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .section-head{
+    display: grid; gap: 16px;
+    margin-bottom: clamp(36px, 5vw, 56px);
+  }
+  .section-head h2{
+    font-family: var(--display);
+    font-style: italic; font-weight: 900; text-transform: uppercase;
+    line-height: 0.9; letter-spacing: -0.01em;
+    font-size: clamp(40px, 7vw, 88px);
+    margin: 0; max-width: 18ch;
+  }
+
+  /* ====== Manifesto ====== */
+  .manifesto{
+    background:
+      linear-gradient(180deg, #080808, #0a0a0a);
+  }
+  .manifesto .grid{
+    display: grid; gap: 40px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 900px){
+    .manifesto .grid{ grid-template-columns: 1fr 1.4fr; gap: 80px; }
+  }
+  .manifesto p{
+    font-size: clamp(18px, 2vw, 24px);
+    line-height: 1.45;
+    color: var(--fg-dim);
+    margin: 0 0 20px;
+    max-width: 38ch;
+  }
+  .manifesto p b{ color: var(--fg); font-weight: 600; }
+  .manifesto p .accent{ color: var(--red); font-weight: 600; font-style: italic; }
+
+  .telemetry{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    align-self: start;
+  }
+  .telemetry .cell{
+    background: var(--bg-2);
+    padding: 24px;
+    min-height: 140px;
+    position: relative;
+  }
+  .telemetry .cell .k{
+    font-family: var(--mono);
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--fg-mute);
+  }
+  .telemetry .cell .v{
+    font-family: var(--display); font-style: italic; font-weight: 900;
+    font-size: clamp(40px, 5vw, 64px);
+    line-height: 1;
+    margin-top: 14px;
+    color: var(--fg);
+  }
+  .telemetry .cell .v .u{
+    font-size: 0.4em; color: var(--fg-mute);
+    margin-left: 6px; letter-spacing: 0.04em;
+  }
+  .telemetry .cell .v.red{ color: var(--red); }
+  .telemetry .cell .tag{
+    margin-top: 10px;
+    font-family: var(--mono); font-size: 11px;
+    color: var(--fg-mute); letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .telemetry .cell::after{
+    /* corner mark */
+    content:""; position:absolute; top:0; right:0;
+    width: 24px; height: 2px; background: var(--red);
+    opacity: .65;
+  }
+
+  /* ====== Pillars ====== */
+  .pillars-grid{
+    display: grid; gap: 20px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 800px){
+    .pillars-grid{ grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  }
+  .pillar{
+    position: relative;
+    background: var(--bg-2);
+    border: 1px solid var(--line-2);
+    padding: 32px 28px 32px;
+    overflow: hidden;
+    transition: border-color .2s ease, transform .25s ease, background .25s ease;
+  }
+  .pillar::before{
+    content:""; position: absolute; top:0; left:0; right:0; height: 3px;
+    background: var(--red);
+  }
+  .pillar:hover{
+    border-color: var(--red-deep);
+    background: #131313;
+    transform: translateY(-4px);
+  }
+  .pillar:hover .pillar-num{ color: var(--red); }
+  .pillar-num{
+    font-family: var(--display); font-style: italic; font-weight: 900;
+    font-size: clamp(80px, 11vw, 140px); line-height: 0.9;
+    color: #222;
+    transition: color .25s ease;
+    letter-spacing: -0.02em;
+  }
+  .pillar-tag{
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--red);
+    margin-top: 12px;
+  }
+  .pillar h3{
+    font-family: var(--display); font-style: italic; font-weight: 900;
+    text-transform: uppercase; letter-spacing: -0.01em;
+    font-size: clamp(32px, 3.6vw, 44px); line-height: 0.95;
+    margin: 8px 0 6px;
+  }
+  .pillar .lede{
+    font-family: var(--mono); font-size: 12px; color: var(--fg-mute);
+    text-transform: uppercase; letter-spacing: 0.1em;
+    margin-bottom: 18px;
+  }
+  .pillar p{
+    color: var(--fg-dim);
+    font-size: 15.5px;
+    line-height: 1.55;
+    margin: 0;
+  }
+  .pillar .ph{
+    margin-top: 24px;
+    aspect-ratio: 4/3;
+    background: #0c0c0c;
+    border: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .pillar .ph img{
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit: cover;
+    filter: grayscale(0.4) contrast(1.05) brightness(0.85);
+    transition: filter .4s ease, transform .8s cubic-bezier(.2,.7,.2,1);
+  }
+  .pillar:hover .ph img{
+    filter: grayscale(0) contrast(1.1) brightness(1);
+    transform: scale(1.04);
+  }
+  .pillar .ph::after{
+    content:""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.9));
+    pointer-events: none;
+  }
+
+  /* ====== For whom ====== */
+  .audience{
+    background: #080808;
+  }
+  .audience .grid{
+    display:grid; gap: 0;
+    grid-template-columns: 1fr;
+    border-top: 1px solid var(--line);
+  }
+  @media (min-width: 800px){
+    .audience .grid{ grid-template-columns: 1fr 1fr; }
+  }
+  .aud-row{
+    border-bottom: 1px solid var(--line);
+    padding: 28px 0;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 18px;
+    align-items: center;
+    transition: padding-left .25s ease, color .25s ease;
+    cursor: default;
+  }
+  @media (min-width: 800px){
+    .aud-row{ border-right: 1px solid var(--line); padding: 28px 24px; }
+    .aud-row:nth-child(2n){ border-right: none; }
+  }
+  .aud-row:hover{
+    padding-left: 12px;
+  }
+  .aud-row:hover .aud-arrow{ transform: translateX(8px); color: var(--red); }
+  .aud-num{
+    font-family: var(--mono); font-size: 12px; color: var(--fg-mute);
+    letter-spacing: 0.15em;
+  }
+  .aud-text{
+    font-family: var(--display); font-style: italic; font-weight: 800;
+    text-transform: uppercase;
+    font-size: clamp(22px, 2.6vw, 32px);
+    line-height: 1; letter-spacing: -0.005em;
+  }
+  .aud-arrow{
+    color: var(--fg-mute);
+    transition: transform .25s ease, color .25s ease;
+    font-family: var(--display); font-weight: 900; font-style: italic;
+    font-size: 26px;
+  }
+
+  /* ====== Mentor ====== */
+  .mentor{
+    background: #080808;
+    overflow: hidden;
+  }
+  .mentor .grid{
+    display: grid; gap: 40px;
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+  @media (min-width: 900px){
+    .mentor .grid{ grid-template-columns: 1fr 1.25fr; gap: 72px; align-items: center; }
+  }
+  .mentor-photo{
+    position: relative;
+    aspect-ratio: 4/5;
+    background: #0c0c0c;
+    border: 1px solid var(--line-2);
+    overflow: hidden;
+  }
+  .mentor-photo img{
+    width:100%; height:100%; object-fit: cover;
+    filter: grayscale(0.15) contrast(1.05);
+    transition: transform .8s cubic-bezier(.2,.7,.2,1), filter .4s ease;
+  }
+  .mentor-photo:hover img{ transform: scale(1.03); filter: grayscale(0) contrast(1.1); }
+  .mentor-photo::after{
+    content:""; position: absolute; left: 0; right: 0; bottom: 0;
+    height: 4px; background: var(--red);
+  }
+  .mentor-photo .corner{
+    position:absolute; top: 0; left: 0;
+    padding: 10px 14px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: .2em;
+    color: #fff; background: var(--red);
+    text-transform: uppercase;
+  }
+  .mentor-photo .id-tag{
+    position:absolute; bottom: 12px; right: 14px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: .15em;
+    color: rgba(255,255,255,0.7);
+    text-transform: uppercase;
+  }
+  .mentor h2{
+    font-family: var(--display); font-style: italic; font-weight: 900;
+    text-transform: uppercase; line-height: 0.9; letter-spacing: -0.01em;
+    font-size: clamp(40px, 6.4vw, 80px); margin: 14px 0 6px;
+  }
+  .mentor h2 .red{ color: var(--red); }
+  .mentor .role{
+    font-family: var(--mono); font-size: 12px; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--fg-mute); margin-bottom: 24px;
+  }
+  .mentor p{
+    color: var(--fg-dim);
+    font-size: clamp(16px, 1.5vw, 18.5px);
+    line-height: 1.6;
+    margin: 0 0 18px;
+    max-width: 52ch;
+  }
+  .mentor p b{ color: var(--fg); font-weight: 600; }
+  .mentor-stats{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin-top: 28px;
+  }
+  .mentor-stats .cell{
+    background: #0d0d0d;
+    padding: 22px 18px;
+    position: relative;
+  }
+  .mentor-stats .cell .v{
+    font-family: var(--display); font-style: italic; font-weight: 900;
+    font-size: clamp(32px, 4vw, 48px); line-height: 1;
+    color: var(--fg);
+  }
+  .mentor-stats .cell .v .u{
+    font-size: 0.45em; color: var(--red); margin-left: 4px; letter-spacing: .04em;
+  }
+  .mentor-stats .cell .k{
+    font-family: var(--mono); font-size: 10px; letter-spacing: .15em;
+    color: var(--fg-mute); text-transform: uppercase;
+    margin-top: 10px; line-height: 1.4;
+  }
+  @media (max-width: 540px){
+    .mentor-stats{ grid-template-columns: 1fr; }
+  }
+
+  /* ====== CTA Final ====== */
+  .cta-final{
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 30% 50%, rgba(225,6,0,0.28), transparent 60%),
+      linear-gradient(180deg, #0c0c0c, #050505);
+  }
+  .cta-final .stripes-red{ opacity:.5; }
+  .cta-final .inner{
+    position: relative; z-index: 2;
+    display: grid; gap: 40px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 900px){
+    .cta-final .inner{ grid-template-columns: 1.2fr 1fr; gap: 64px; align-items: center; }
+  }
+  .cta-final h2{
+    font-family: var(--display); font-style: italic; font-weight: 900;
+    text-transform: uppercase; line-height: 0.88; letter-spacing: -0.01em;
+    font-size: clamp(44px, 7.5vw, 100px); margin: 18px 0 12px;
+  }
+  .cta-final h2 .red{ color: var(--red); }
+  .cta-final p{
+    color: var(--fg-dim); font-size: clamp(16px, 1.5vw, 19px);
+    max-width: 48ch; line-height: 1.5; margin: 0 0 32px;
+  }
+  .cta-actions{
+    display: flex; flex-wrap: wrap; gap: 14px;
+  }
+  .contact-card{
+    background: rgba(20,20,20,0.7);
+    border: 1px solid var(--line-2);
+    padding: 28px;
+    backdrop-filter: blur(8px);
+  }
+  .contact-card .ch{
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--fg-mute);
+    margin-bottom: 18px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .contact-card .ch::before{ content:""; width:18px; height:1px; background: var(--red); display: inline-block;}
+  .contact-list{
+    list-style: none; margin: 0; padding: 0;
+    display: grid; gap: 14px;
+  }
+  .contact-list li{
+    display:flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .contact-list li:last-child{ border-bottom: none; }
+  .contact-list .lbl{
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--fg-mute);
+  }
+  .contact-list .val{
+    font-family: var(--display); font-style: italic; font-weight: 800;
+    text-transform: uppercase; font-size: 18px;
+    letter-spacing: 0.02em;
+  }
+  .contact-list a:hover .val{ color: var(--red); }
+  .contact-list a{
+    display: flex; align-items: center; justify-content: space-between;
+    width:100%; gap:16px;
+    transition: transform .2s ease;
+  }
+  .contact-list a:hover{ transform: translateX(4px); }
+
+  /* ====== Footer ====== */
+  footer{
+    background: #050505;
+    padding: 48px 0 110px;
+    position: relative;
+  }
+  @media (min-width: 800px){ footer{ padding-bottom: 56px; } }
+  footer .foot-grid{
+    display: grid; gap: 32px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 800px){
+    footer .foot-grid{ grid-template-columns: 1fr auto; align-items: end; }
+  }
+  footer .brand-block .tag{
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em;
+    color: var(--fg-mute); text-transform: uppercase; margin-top: 10px;
+  }
+  footer .legal{
+    font-family: var(--mono); font-size: 11px; color: var(--fg-mute);
+    letter-spacing: 0.12em; text-transform: uppercase;
+  }
+  footer .legal a:hover{ color: var(--red); }
+
+  /* ====== Sticky mobile CTA ====== */
+  .sticky-cta{
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+    background: linear-gradient(180deg, rgba(10,10,10,0), rgba(10,10,10,0.95) 30%);
+    display: flex; gap: 10px;
+    transform: translateY(120%);
+    transition: transform .35s cubic-bezier(.2,.7,.2,1);
+  }
+  .sticky-cta.show{ transform: translateY(0); }
+  .sticky-cta .btn{ flex:1; justify-content:center; padding: 16px 16px; font-size: 15px;}
+  @media (min-width: 800px){ .sticky-cta{ display: none; } }
+
+  /* ====== Scroll reveal ====== */
+  .reveal{
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1);
+    will-change: opacity, transform;
+  }
+  .reveal.in{ opacity: 1; transform: none; }
+  .reveal.delay-1{ transition-delay: .08s; }
+  .reveal.delay-2{ transition-delay: .16s; }
+  .reveal.delay-3{ transition-delay: .24s; }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce){
+    *{ animation: none !important; transition: none !important; }
+    .reveal{ opacity:1; transform:none; }
+  }
+
+  /* Section number plate (left rail on large screens) */
+  .plate{
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--fg-mute);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .plate .swatch{
+    width: 10px; height: 10px; background: var(--red);
+    transform: skewX(-18deg);
+    display:inline-block;
+  }
+
+  /* Helpers */
+  .red{ color: var(--red); }
+  .mono{ font-family: var(--mono); }
+
+</style>
+</head>
+<body>
+
+<!-- ====================================================
+     TOP / NAV
+==================================================== -->
+<header class="top" data-screen-label="00 Topbar">
+  <div class="wrap top-inner">
+    <a href="#top" class="brand" aria-label="MINDSPEED">
+      <span class="bar" aria-hidden="true"></span>
+      MINDSPEED
+    </a>
+    <a href="#agendar" class="btn sm top-cta" aria-label="Agende uma conversa diagnóstica gratuita">
+      Agendar diagnóstico
+      <span class="arrow" aria-hidden="true">→</span>
+    </a>
+  </div>
+</header>
+
+<!-- ====================================================
+     HERO
+==================================================== -->
+<section class="hero" id="top" data-screen-label="01 Hero">
+  <div class="stripes" aria-hidden="true"></div>
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow reveal">Performance Mental · Pilotos · Kart · Automobilismo</div>
+      <h1 class="display reveal delay-1">
+        A corrida<br/>
+        que <span class="ninguem">ninguém</span><br/>
+        vê.
+      </h1>
+      <p class="sub reveal delay-2">
+        A diferença entre o <b>pódio</b> e o <b>pelotão</b> começa na sua mente.
+        Mentoria de performance mental para pilotos que já dominam o volante — e agora querem dominar o que vem antes dele.
+      </p>
+      <div class="hero-cta-row reveal delay-3">
+        <a href="#agendar" class="btn lg" aria-label="Agende uma conversa diagnóstica gratuita">
+          Agende um diagnóstico gratuito
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <a href="#pilares" class="btn ghost lg">
+          Conheça os 3 pilares
+        </a>
+      </div>
+
+      <div class="hero-meta reveal delay-3" aria-hidden="true">
+        <div><b>4G</b>Força lateral</div>
+        <div><b>180bpm</b>Sob largada</div>
+        <div><b>0,3s</b>Decisão por curva</div>
+      </div>
+    </div>
+
+    <!-- HERO IMAGE -->
+    <div class="hero-visual reveal delay-2" aria-hidden="true">
+      <img class="hv-img" alt="Piloto de macacão preto e capacete preto com faixa vermelha em pé na pit lane à noite" src="assets/hero-pilot.jpg" width="928" height="1152" fetchpriority="high" decoding="async" />
+      <div class="diag"></div>
+      <div class="corner-red"></div>
+      <div class="ph-label">
+        <span>HERO · PIT LANE</span>
+        <span>BR · 2026</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+     TICKER (track feel)
+==================================================== -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>FOCO <span class="dot"></span></span>
+    <span>RESPIRAÇÃO <span class="dot"></span></span>
+    <span>FLOW <span class="dot"></span></span>
+    <span>DISCIPLINA <span class="dot"></span></span>
+    <span>PRESENÇA <span class="dot"></span></span>
+    <span>RESILIÊNCIA <span class="dot"></span></span>
+    <span>MENTALIDADE <span class="dot"></span></span>
+    <span>FOCO <span class="dot"></span></span>
+    <span>RESPIRAÇÃO <span class="dot"></span></span>
+    <span>FLOW <span class="dot"></span></span>
+    <span>DISCIPLINA <span class="dot"></span></span>
+    <span>PRESENÇA <span class="dot"></span></span>
+    <span>RESILIÊNCIA <span class="dot"></span></span>
+    <span>MENTALIDADE <span class="dot"></span></span>
+  </div>
+</div>
+
+<!-- ====================================================
+     MANIFESTO / O PROBLEMA
+==================================================== -->
+<section class="section manifesto" id="manifesto" data-screen-label="02 Manifesto">
+  <div class="stripes" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="plate"><span class="swatch" aria-hidden="true"></span> 01 · O Problema</div>
+      <h2>Sob 4G, batimentos a 180, <span class="red">a única vantagem é mental.</span></h2>
+    </div>
+
+    <div class="grid">
+      <div>
+        <p class="reveal">
+          Em milésimos de segundo, sua mente decide a curva <b>antes</b> do seu corpo executá-la.
+          Sob <b>4G de força lateral</b>, batimentos a <b>180 bpm</b> e adrenalina inundando o sistema, a única vantagem real que sobra é <span class="accent">mental</span>.
+        </p>
+        <p class="reveal delay-1">
+          Pilotos de elite não são apenas mais rápidos — <b>eles pensam diferente</b>.
+          Gerenciam a pressão como recurso, não como ameaça.
+          Recuperam-se de erros em instantes.
+        </p>
+        <p class="reveal delay-2">
+          Entram em <span class="accent">flow</span> quando os outros entram em pânico.
+        </p>
+      </div>
+
+      <!-- Telemetry: not literal numbers, but referenced from the manifesto -->
+      <div class="telemetry reveal delay-1" role="presentation" aria-hidden="true">
+        <div class="cell">
+          <div class="k">G-Force lateral</div>
+          <div class="v">4<span class="u">G</span></div>
+          <div class="tag">Pico em curva rápida</div>
+        </div>
+        <div class="cell">
+          <div class="k">Frequência cardíaca</div>
+          <div class="v red">180<span class="u">bpm</span></div>
+          <div class="tag">Sob largada</div>
+        </div>
+        <div class="cell">
+          <div class="k">Janela de decisão</div>
+          <div class="v">0,3<span class="u">s</span></div>
+          <div class="tag">Por curva crítica</div>
+        </div>
+        <div class="cell">
+          <div class="k">Estado-alvo</div>
+          <div class="v red">FLOW</div>
+          <div class="tag">Foco · presença · clareza</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+     OS 3 PILARES
+==================================================== -->
+<section class="section pillars" id="pilares" data-screen-label="03 Pilares">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="plate"><span class="swatch" aria-hidden="true"></span> 02 · Metodologia</div>
+      <h2>Os 3 pilares da <span class="red">vantagem mental.</span></h2>
+    </div>
+
+    <div class="pillars-grid">
+
+      <!-- PILAR 01 -->
+      <article class="pillar reveal" aria-labelledby="p1">
+        <div class="pillar-num">01</div>
+        <div class="pillar-tag">Pilar 01</div>
+        <h3 id="p1">Mindfulness</h3>
+        <div class="lede">Foco · Presença · Concentração</div>
+        <p>
+          A pista não perdoa mente dispersa. Ansiedade e inquietação tiram você do agora.
+          Vamos treinar a mente para ter mais estabilidade e foco de <b style="color:var(--fg)">raio laser</b> nas pistas.
+        </p>
+        <div class="ph">
+          <img alt="Close do olho de um piloto dentro do capacete, foco intenso" src="assets/pillar-01-mindfulness.jpg" width="1200" height="900" loading="lazy" decoding="async" />
+        </div>
+      </article>
+
+      <!-- PILAR 02 -->
+      <article class="pillar reveal delay-1" aria-labelledby="p2">
+        <div class="pillar-num">02</div>
+        <div class="pillar-tag">Pilar 02</div>
+        <h3 id="p2">Breathwork</h3>
+        <div class="lede">Vitalidade & gestão emocional inteligente</div>
+        <p>
+          Técnicas de respiração para dominar o sistema nervoso e otimizar as respostas emocionais na pista.
+          Gerir melhor a <b style="color:var(--fg)">adrenalina</b> e manter a clareza sob pressão.
+        </p>
+        <div class="ph">
+          <img alt="Piloto sentado no kart com capacete no colo, olhos baixos, respirando antes da largada" src="assets/pillar-02-breathwork.jpg" width="1200" height="900" loading="lazy" decoding="async" />
+        </div>
+      </article>
+
+      <!-- PILAR 03 -->
+      <article class="pillar reveal delay-2" aria-labelledby="p3">
+        <div class="pillar-num">03</div>
+        <div class="pillar-tag">Pilar 03</div>
+        <h3 id="p3">Mentalidade</h3>
+        <div class="lede">Motivação · Disciplina · Autoconhecimento</div>
+        <p>
+          Talento abre a porta, mentalidade decide quanto tempo você fica na sala.
+          Liberte-se da autocrítica negativa e desenvolva uma visão precisa e positiva sobre si mesmo.
+          Cultive a <b style="color:var(--fg)">motivação, disciplina e resiliência</b> dos campeões.
+        </p>
+        <div class="ph">
+          <img alt="Piloto de costas caminhando pela pit lane com capacete na mão" src="assets/pillar-03-mentalidade.jpg" width="1200" height="900" loading="lazy" decoding="async" />
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Inline CTA repetition -->
+    <div class="reveal" style="margin-top: clamp(40px, 6vw, 72px); display:flex; flex-wrap:wrap; gap:14px; align-items:center;">
+      <a href="#agendar" class="btn lg">
+        Comece pelo diagnóstico gratuito
+        <span class="arrow" aria-hidden="true">→</span>
+      </a>
+      <span class="mono" style="font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--fg-mute);">
+        Conversa 1:1 · sem compromisso
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+     PARA QUEM É
+==================================================== -->
+<section class="section audience" id="para-quem" data-screen-label="04 Para Quem">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="plate"><span class="swatch" aria-hidden="true"></span> 03 · Para quem é esta mentoria</div>
+      <h2>Para quem corre contra <span class="red">o próprio limite.</span></h2>
+    </div>
+
+    <div class="grid" role="list">
+
+      <div class="aud-row reveal" role="listitem">
+        <span class="aud-num">/01</span>
+        <span class="aud-text">Pilotos profissionais e em ascensão</span>
+        <span class="aud-arrow" aria-hidden="true">→</span>
+      </div>
+
+      <div class="aud-row reveal delay-1" role="listitem">
+        <span class="aud-num">/02</span>
+        <span class="aud-text">Atletas que buscam destravar o mental</span>
+        <span class="aud-arrow" aria-hidden="true">→</span>
+      </div>
+
+      <div class="aud-row reveal delay-2" role="listitem">
+        <span class="aud-num">/03</span>
+        <span class="aud-text">Equipes que buscam diferencial competitivo</span>
+        <span class="aud-arrow" aria-hidden="true">→</span>
+      </div>
+
+      <div class="aud-row reveal delay-3" role="listitem">
+        <span class="aud-num">/04</span>
+        <span class="aud-text">Pilotos retornando após acidentes ou lesões</span>
+        <span class="aud-arrow" aria-hidden="true">→</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+     MENTOR / SOBRE WANDLER
+==================================================== -->
+<section class="section mentor" id="mentor" data-screen-label="05 Mentor">
+  <div class="stripes" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="plate"><span class="swatch" aria-hidden="true"></span> 04 · Quem está do outro lado do rádio</div>
+    </div>
+
+    <div class="grid">
+      <div class="mentor-photo reveal">
+        <img src="assets/wandler.jpg" alt="Retrato de Wandler, mentor e instrutor da MINDSPEED" width="1024" height="1280" loading="lazy" decoding="async" />
+        <div class="corner" aria-hidden="true">Mentor</div>
+        <div class="id-tag" aria-hidden="true">Wandler · São Paulo / BR</div>
+      </div>
+
+      <div class="reveal delay-1">
+        <div class="eyebrow">Mentor &amp; instrutor</div>
+        <h2>Wandler.<br/><span class="red">12 anos</span> treinando a mente.</h2>
+        <div class="role">Mindfulness · Breathwork · Performance Mental</div>
+
+        <p>
+          Com <b>12 anos de práticas contemplativas</b> e <b>7 anos de atuação profissional</b> como instrutor de Mindfulness e técnicas respiratórias, já treinei dezenas de pessoas em busca de autoconhecimento e melhoria da performance mental.
+        </p>
+        <p>
+          Entre elas <b>executivos</b>, <b>atletas</b> e estudantes em preparação para <b>concursos públicos</b> — pessoas que precisam performar quando a margem de erro é mínima.
+        </p>
+
+        <div class="mentor-stats" role="presentation" aria-hidden="true">
+          <div class="cell">
+            <div class="v">12<span class="u">anos</span></div>
+            <div class="k">Práticas<br/>contemplativas</div>
+          </div>
+          <div class="cell">
+            <div class="v">07<span class="u">anos</span></div>
+            <div class="k">Atuação<br/>profissional</div>
+          </div>
+          <div class="cell">
+            <div class="v">+50<span class="u">.</span></div>
+            <div class="k">Mentorados<br/>1:1</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+     CTA FINAL
+==================================================== -->
+<section class="section cta-final" id="agendar" data-screen-label="06 CTA Agendar">
+  <div class="stripes-red" aria-hidden="true"></div>
+  <div class="wrap inner">
+    <div>
+      <div class="eyebrow reveal">Próximo passo</div>
+      <h2 class="reveal delay-1">
+        Agende uma <br/>
+        <span class="red">conversa diagnóstica</span> <br/>
+        gratuita.
+      </h2>
+      <p class="reveal delay-2">
+        30 minutos, 1:1. Vamos mapear como sua mente está operando na pista hoje
+        — e onde estão os milésimos que você ainda não viu.
+      </p>
+      <div class="cta-actions reveal delay-3">
+        <a class="btn lg" target="_blank" rel="noopener"
+           href="https://wa.me/5511952394256?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20MINDSPEED%20e%20quero%20agendar%20uma%20conversa%20diagn%C3%B3stica%20gratuita."
+           aria-label="Abrir conversa no WhatsApp para agendar diagnóstico">
+          Falar no WhatsApp
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="btn ghost lg" href="https://instagram.com/mindspeedbr" target="_blank" rel="noopener">
+          @mindspeedbr
+        </a>
+      </div>
+    </div>
+
+    <aside class="contact-card reveal delay-2" aria-label="Canais de contato">
+      <div class="ch">Canais diretos</div>
+      <ul class="contact-list">
+        <li>
+          <a target="_blank" rel="noopener"
+             href="https://wa.me/5511952394256?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20MINDSPEED%20e%20quero%20agendar%20uma%20conversa%20diagn%C3%B3stica%20gratuita."
+             aria-label="WhatsApp 11 95239-4256">
+            <span class="lbl">WhatsApp</span>
+            <span class="val">(11) 95239-4256</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://instagram.com/mindspeedbr" target="_blank" rel="noopener" aria-label="Instagram @mindspeedbr">
+            <span class="lbl">Instagram</span>
+            <span class="val">@mindspeedbr</span>
+          </a>
+        </li>
+      </ul>
+    </aside>
+  </div>
+</section>
+
+<!-- ====================================================
+     FOOTER
+==================================================== -->
+<footer data-screen-label="07 Footer">
+  <div class="wrap foot-grid">
+    <div class="brand-block">
+      <a href="#top" class="brand" aria-label="MINDSPEED">
+        <span class="bar" aria-hidden="true"></span>
+        MINDSPEED
+      </a>
+      <div class="tag">Performance mental para pilotos</div>
+    </div>
+    <div class="legal">
+      © 2026 MINDSPEED · Performance mental para pilotos · Todos os direitos reservados.
+    </div>
+  </div>
+</footer>
+
+<!-- ====================================================
+     STICKY MOBILE CTA
+==================================================== -->
+<div class="sticky-cta" id="stickyCta" aria-hidden="true">
+  <a class="btn" href="#agendar" style="flex:1;">
+    Agendar diagnóstico
+    <span class="arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+<script>
+  // ===== Scroll reveal via IntersectionObserver =====
+  (function(){
+    const els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) {
+      els.forEach(e => e.classList.add('in'));
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting){
+          en.target.classList.add('in');
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    els.forEach(e => io.observe(e));
+  })();
+
+  // ===== Sticky mobile CTA: show after scrolling past hero =====
+  (function(){
+    const cta = document.getElementById('stickyCta');
+    const hero = document.querySelector('.hero');
+    const cta_final = document.getElementById('agendar');
+    if (!cta || !hero) return;
+
+    let lastShown = false;
+    function update(){
+      const heroBottom = hero.getBoundingClientRect().bottom;
+      const ctaTop = cta_final.getBoundingClientRect().top;
+      const viewportH = window.innerHeight;
+      // show when past hero AND before final CTA visible
+      const shouldShow = heroBottom < 60 && ctaTop > viewportH - 120;
+      if (shouldShow !== lastShown){
+        cta.classList.toggle('show', shouldShow);
+        cta.setAttribute('aria-hidden', shouldShow ? 'false' : 'true');
+        lastShown = shouldShow;
+      }
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+</script>
+
+</body>
+</html>
