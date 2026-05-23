@@ -334,7 +334,7 @@
     background: #050505;
   }
   .ticker-track{
-    display: flex; gap: 56px;
+    display: flex;
     padding: 14px 0;
     white-space: nowrap;
     animation: tickerMove var(--ticker-duration, 18s) linear infinite;
@@ -346,10 +346,15 @@
     transform: translateZ(0);
     backface-visibility: hidden;
   }
-  @media (max-width: 980px){
-    .ticker-track{ gap: 36px; font-size: 16px; }
+  .ticker-track > span{
+    display:inline-flex; align-items:center; gap: 14px;
+    margin-right: 56px;   /* cada item "carrega" seu próprio gap p/ o loop ficar perfeito */
+    flex: 0 0 auto;
   }
-  .ticker-track span{ display:inline-flex; align-items:center; gap: 14px; }
+  @media (max-width: 980px){
+    .ticker-track{ font-size: 16px; }
+    .ticker-track > span{ margin-right: 36px; }
+  }
   .ticker-track .dot{ width:6px; height:6px; background:var(--red); border-radius:50%; display:inline-block; }
   @keyframes tickerMove{
     from{ transform: translate3d(0,0,0); }
@@ -1222,7 +1227,7 @@
     const track = document.querySelector('.ticker-track');
     if (!track) return;
     const DESKTOP_PX_PER_SEC = 140;
-    const MOBILE_PX_PER_SEC  = 320;
+    const MOBILE_PX_PER_SEC  = 384; // +20% sobre 320
 
     function update(){
       const halfWidth = track.scrollWidth / 2;
