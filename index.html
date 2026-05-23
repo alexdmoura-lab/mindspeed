@@ -73,7 +73,7 @@
   ::selection{ background: var(--red); color:#fff; }
 
   /* Anchor scroll-margin so sticky header doesn't cover targets */
-  section[id]{ scroll-margin-top: 72px; }
+  section[id]{ scroll-margin-top: 84px; }
 
   /* ====== Layout shell ====== */
   .wrap{
@@ -119,7 +119,7 @@
   }
   .top-inner{
     display:flex; align-items:center; justify-content:space-between;
-    height: 64px;
+    height: 76px;
   }
   .brand{
     display: inline-flex; align-items: center; gap: 10px;
@@ -131,10 +131,10 @@
     transform: skewX(-18deg);
   }
   .brand .logo-img{
-    height: 44px; width: auto; display: block;
+    height: 56px; width: auto; display: block;
   }
   @media (min-width: 800px){
-    .brand .logo-img{ height: 52px; }
+    .brand .logo-img{ height: 64px; }
   }
   .top-cta{
     display: none;
@@ -338,6 +338,9 @@
     padding: 14px 0;
     white-space: nowrap;
     animation: tickerMove 18s linear infinite;
+  }
+  @media (max-width: 799px){
+    .ticker-track{ animation-duration: 10s; }
     font-family: var(--display); font-style: italic; font-weight: 800;
     text-transform: uppercase; letter-spacing: 0.06em;
     font-size: 18px;
