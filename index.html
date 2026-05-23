@@ -130,11 +130,17 @@
     width:6px; height:22px; background: var(--red);
     transform: skewX(-18deg);
   }
+  .brand .logo-plate{
+    display: inline-flex; align-items: center;
+    background: #fff;
+    padding: 6px 10px;
+    line-height: 0;
+  }
   .brand .logo-img{
-    height: 28px; width: auto; display: block;
+    height: 22px; width: auto; display: block;
   }
   @media (min-width: 800px){
-    .brand .logo-img{ height: 32px; }
+    .brand .logo-img{ height: 26px; }
   }
   .top-cta{
     display: none;
@@ -272,6 +278,9 @@
     background: linear-gradient(180deg, #141414, #0d0d0d);
     border: 1px solid var(--line-2);
     overflow: hidden;
+  }
+  @media (min-width: 980px){
+    .hero-visual{ aspect-ratio: 1/1; }
   }
   .hero-visual .hv-img{
     position:absolute; inset:0; width:100%; height:100%;
@@ -800,11 +809,10 @@
 ==================================================== -->
 <header class="top" data-screen-label="00 Topbar">
   <div class="wrap top-inner">
-    <a href="#top" class="brand" aria-label="MINDSPEED">
-      <img class="logo-img" src="assets/logo-mindspeed.png" alt="MINDSPEED — Performance Mental para Pilotos"
-           onerror="this.style.display='none';this.nextElementSibling.style.display='inline-block';this.nextElementSibling.nextElementSibling.style.display='inline';" />
-      <span class="bar" aria-hidden="true" style="display:none;"></span>
-      <span style="display:none;">MINDSPEED</span>
+    <a href="#top" class="brand" aria-label="MINDSPEED — Performance Mental para Pilotos">
+      <span class="logo-plate">
+        <img class="logo-img" src="assets/logo-mindspeed.jpg" alt="MINDSPEED — Performance Mental para Pilotos" />
+      </span>
     </a>
     <a href="#agendar" class="btn sm top-cta" aria-label="Agende uma conversa diagnóstica gratuita">
       Agendar diagnóstico
@@ -849,7 +857,7 @@
 
     <!-- HERO IMAGE -->
     <div class="hero-visual reveal delay-2" aria-hidden="true">
-      <img class="hv-img" alt="Piloto de macacão preto e capacete preto com faixa vermelha em pé na pit lane à noite" src="assets/hero-pilot.jpg" width="928" height="1152" fetchpriority="high" decoding="async" />
+      <img class="hv-img" alt="Piloto de F1 sentado no cockpit no Autódromo de Interlagos, olhos fechados, respiração consciente visualizada em ondas azuis ao redor da cabeça, padrão de batimentos e onda cerebral em sobreposição" src="assets/hero-pilot.jpg" width="1600" height="924" fetchpriority="high" decoding="async" />
       <div class="diag"></div>
       <div class="corner-red"></div>
       <div class="ph-label">
@@ -959,7 +967,7 @@
           Vamos treinar a mente para ter mais estabilidade e foco de <b style="color:var(--fg)">raio laser</b> nas pistas.
         </p>
         <div class="ph">
-          <img alt="Close do olho de um piloto dentro do capacete, foco intenso" src="assets/pillar-01-mindfulness.jpg" width="1200" height="900" loading="lazy" decoding="async" />
+          <img alt="Perfil de piloto com capacete vermelho e preto, olhos fechados, cérebro luminoso em azul e vermelho sobreposto ao capacete simbolizando foco mental" src="assets/pillar-01-mindfulness.jpg" width="1254" height="1254" loading="lazy" decoding="async" />
         </div>
       </article>
 
