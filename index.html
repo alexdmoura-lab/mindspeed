@@ -338,13 +338,14 @@
     padding: 14px 0;
     white-space: nowrap;
     animation: tickerMove 18s linear infinite;
-  }
-  @media (max-width: 799px){
-    .ticker-track{ animation-duration: 10s; }
     font-family: var(--display); font-style: italic; font-weight: 800;
     text-transform: uppercase; letter-spacing: 0.06em;
     font-size: 18px;
     color: var(--fg-mute);
+    will-change: transform;
+  }
+  @media (max-width: 980px){
+    .ticker-track{ animation-duration: 8s; }
   }
   .ticker-track span{ display:inline-flex; align-items:center; gap: 14px; }
   .ticker-track .dot{ width:6px; height:6px; background:var(--red); border-radius:50%; display:inline-block; }
@@ -774,9 +775,10 @@
   .reveal.delay-2{ transition-delay: .16s; }
   .reveal.delay-3{ transition-delay: .24s; }
 
-  /* Reduced motion */
+  /* Reduced motion — preserva o ticker, que é elemento de marca */
   @media (prefers-reduced-motion: reduce){
-    *{ animation: none !important; transition: none !important; }
+    *:not(.ticker-track){ animation: none !important; transition: none !important; }
+    .ticker-track{ animation-duration: 30s !important; }
     .reveal{ opacity:1; transform:none; }
   }
 
